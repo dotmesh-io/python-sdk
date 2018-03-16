@@ -86,7 +86,7 @@ class Dot(object):
         if branchname == "master":
             bname = ""
         self.client.request("DotmeshRPC.Lookup", Namespace="admin",Name=self.name, Branch=bname)
-        return Branch(client=self.client, dot=self, name=branchname)
+        return Branch(dot=self, name=branchname)
 
 class Branch(object):
     """
@@ -94,7 +94,7 @@ class Branch(object):
     :param dot: the Dot this branch belongs to
     :param name: the name of the branch
     """
-    def __init__(self, client, dot, name):
+    def __init__(self, dot, name):
         """
         Creates an instance of a branch in a dot.
         """
@@ -120,3 +120,20 @@ class Branch(object):
         if self.name == "master":
             bname = ""
         return self.dot.client.request("DotmeshRPC.Commits", Namespace="admin", Name=self.dot.name, Branch=bname)
+
+    def createBranch(self, newbranchname, srcbranchname, commit_id=""):
+        """
+        Create a branch based on an existing (source) branch.
+        If no commit ID is provided, uses the ID of the most recent commit.
+
+        :param newbranchname: the name of the new branch to create
+        :param srcbranchname: the name of the branch to start the new branch off
+        :param commit_id: if set, use this commit ID otherwise use most recent
+        :return: a Branch object
+        """
+        if commit_id == "":  # use the most recent commit ID
+            commitlog = self.log()
+            commit_id = commitlog[-1]["Id"]  
+        self.dot.client.request("DotmeshRPC.Branch",
+                                Namespace="admin", Name=self.dot.name, SourceBranch=srcbranchname, NewBranchName=newbranchname, SourceCommitId=commit_id)
+        return Branch(dot=self.dot, name=newbranchname)

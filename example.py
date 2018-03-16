@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 from api.client import DotmeshClient
 
@@ -9,7 +10,7 @@ dmclient = DotmeshClient(cluster_url=cluster_url, username="admin", api_key=api_
 
 # now let's create a dot called 'test' and work in a branch called 'master':
 dotname = "test"
-branchname= "master"
+branchname = "master"
 print("== Create dot:")
 dot = dmclient.createDot(dotname=dotname)
 # alternatively, if a dot already exists,
@@ -33,6 +34,15 @@ for entry in log:
     ctime = entry["Metadata"]["timestamp"]
     print("{0}: {1}".format(ctime, msg))
 
-# now let's clean up by deleting the dot (and all the commits)
+# time for a new branch:
+print("\n== Create new branch, commit and show log:")
+mybranch = branch.createBranch("mybranch", "master")
+mybranch.commit("the first commit in my branch")
+mylog = mybranch.log()
+print("\n")
+print("{0}: {1}".format(mylog[0]["Metadata"]["timestamp"], mylog[0]["Metadata"]["message"]))
+
+# and finally, let's clean up by deleting the dot (and all the commits)
 print("\n== Clean-up:")
-dmclient.deleteDot(dotname=dotname)
+if len(sys.argv) > 1 and sys.argv[1]=="cleanup":
+    dmclient.deleteDot(dotname=dotname)
