@@ -1,6 +1,7 @@
 # Datadots API for Python
 
 [![PyPI](https://img.shields.io/pypi/v/nine.svg)](https://pypi.python.org/pypi/datadots-api)
+[![Read the Docs](https://img.shields.io/readthedocs/pip.svg)](http://dotmesh-io-python-sdk.readthedocs.io/en/latest/README/)
 
 **STATUS: What you currently see here is WIP, do not use in production!** 
 
