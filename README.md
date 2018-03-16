@@ -6,7 +6,7 @@ This is the Datadots API for Python, allowing you to access and manipulate dots 
 
 ## Install
 
-TBD. Once this repo is public, register via https://pypi.python.org/pypi
+TBD: register via https://pypi.python.org/pypi
 
 ## Use
 
@@ -17,17 +17,7 @@ d = DotmeshClient(cluster_url=cluster_url, username=user, api_key=api_key)
 print(d.getDot(dotname="test"))
 ```
 
-Full example:
-
-```python
-d = DotmeshClient(cluster_url=cluster_url, username=user, api_key=api_key)
-dot = d.getDot(dotname="test")
-branch = dot.getBranch("master")
-branch.commit(commitMessage)
-newBranch = branch.branch(newBranch)
-```
-
-For example, for a local setup with Docker running and after you've created a cluster using `dm cluster init`, you can run the following [example](example.py):
+You can see this API in action, for a local setup with Docker running and after you've created a cluster using `dm cluster init`, by running the following [example](example.py):
 
 ```bash
 $ DOTMESH_APIKEY=$(cat ~/.dotmesh/config | jq -r .Remotes.local.ApiKey)
