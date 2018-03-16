@@ -1,6 +1,6 @@
 # Datadots API for Python
 
-STATUS: This WIP!
+**STATUS: What you currently see here is WIP, do not use in production!** 
 
 This is the Datadots API for Python, allowing you to access and manipulate dots against any Dotmesh cluster. Note that only Python 3 is supported.
 
