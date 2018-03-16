@@ -2,14 +2,13 @@
 # extensions = ['autoapi.extension']
 
 def run_apidoc(_):
-    modules = ['api']
-    for module in modules:
-        cur_dir = os.path.abspath(os.path.dirname(__file__))
-        output_path = os.path.join(cur_dir, module, 'doc')
-        cmd_path = 'sphinx-apidoc'
-        if hasattr(sys, 'real_prefix'):
-            cmd_path = os.path.abspath(os.path.join( sys.prefix, 'bin', 'sphinx-apidoc'))
-        subprocess.check_call([cmd_path, '-e', '-o', output_path, module, '--force'])
+	from sphinx.apidoc import main
+	import os
+	import sys
+	sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+	cur_dir = os.path.abspath(os.path.dirname(__file__))
+	module = os.path.join(cur_dir, "api")
+	main(['-e', '-o', cur_dir, module, '--force'])
 
 def setup(app):
-    app.connect('builder-inited', run_apidoc)
+	app.connect('builder-inited', run_apidoc)
