@@ -1,0 +1,6 @@
+{
+    "jsonrpc": "2.0",
+    "method": "DotmeshRPC.Version",
+    "params": {},
+    "id": 6129484611666146000
+}
