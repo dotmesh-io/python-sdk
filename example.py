@@ -20,5 +20,8 @@ print("Dot: ID={0}, name={1}".format(dot.id, dot.name))
 branch = dot.getBranch(branchname)
 print("Branch: {0}".format(branch.name))
 
+# now let's do a commit:
+branch.commit("just a test commit")
+
 # now let's clean up:
-dmclient.deleteDot(dotname=dotname)
+# dmclient.deleteDot(dotname=dotname)

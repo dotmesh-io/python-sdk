@@ -86,17 +86,28 @@ class Dot(object):
         if branchname == "master":
             bname = ""
         self.client.request("DotmeshRPC.Lookup", Namespace="admin",Name=self.name, Branch=bname)
-        return Branch(client=self.client, name=branchname)
+        return Branch(client=self.client, dot=self, name=branchname)
 
 class Branch(object):
     """
     A branch in a dot.
-    :param client: the Dotmesh client to use
+    :param dot: the Dot this branch belongs to
     :param name: the name of the branch
     """
-    def __init__(self, client, name):
+    def __init__(self, client, dot, name):
         """
         Creates an instance of a branch in a dot.
         """
-        self.client = client
+        self.dot = dot
         self.name = name
+
+    def commit(self, msg):
+        """
+        Commits the branch.
+
+        :param msg: the commit message to use
+        """
+        bname = self.name
+        if self.name == "master":
+            bname = ""
+        return self.dot.client.request("DotmeshRPC.Commit", Namespace="admin", Name=self.dot.name, Branch=bname, Message=msg)
