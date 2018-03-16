@@ -1,5 +1,7 @@
 # Datadots API for Python
 
+[![PyPI](https://img.shields.io/pypi/v/nine.svg)](https://pypi.python.org/pypi/datadots-api)
+
 **STATUS: What you currently see here is WIP, do not use in production!** 
 
 This is the Datadots API for Python, allowing you to access and manipulate dots against any Dotmesh cluster. Note that only Python 3 is supported.
