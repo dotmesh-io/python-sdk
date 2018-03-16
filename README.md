@@ -18,7 +18,12 @@ This is the Datadots API for Python, allowing you to access and manipulate dots 
 
 ## Install
 
-TBD: register via https://pypi.python.org/pypi
+You must have Python 3 installed, this is the only version supported.
+Then do:
+
+```bash
+$ pip3 install datadots-api==0.1.0
+```
 
 ## Use
 
