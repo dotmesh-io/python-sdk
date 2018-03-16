@@ -1,0 +1,6 @@
+{
+    "jsonrpc": "2.0",
+    "method": "DotmeshRPC.Ping",
+    "params": {},
+    "id": 6129484611666146000
+}
