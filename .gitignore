@@ -1,3 +1,6 @@
 .DS_Store
 .vscode
 *.pyc
+build
+datadots_api.egg-info
+dist
