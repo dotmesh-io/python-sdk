@@ -22,6 +22,7 @@ print("Branch: {0}".format(branch.name))
 
 # now let's do a commit:
 branch.commit("just a test commit")
+print(branch.log())
 
 # now let's clean up:
 # dmclient.deleteDot(dotname=dotname)

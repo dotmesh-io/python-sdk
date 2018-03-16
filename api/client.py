@@ -111,3 +111,12 @@ class Branch(object):
         if self.name == "master":
             bname = ""
         return self.dot.client.request("DotmeshRPC.Commit", Namespace="admin", Name=self.dot.name, Branch=bname, Message=msg)
+
+    def log(self):
+        """
+        Shows the commit log.
+        """
+        bname = self.name
+        if self.name == "master":
+            bname = ""
+        return self.dot.client.request("DotmeshRPC.Commits", Namespace="admin", Name=self.dot.name, Branch=bname)
