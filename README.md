@@ -1,7 +1,8 @@
-# Datadots API—Python
+# Datadots API for Python
 
 ## Install
 
+TBD.
 
 ## Use
 
@@ -14,12 +15,24 @@ newBranch = branch.branch(newBranch)
 ```
 
 
-## Testing
+## Test
 
 Locally, you can test the API like so, given [http](https://httpie.org/) (or alternatively you can use `curl`) is installed and Docker is running:
 
 ```bash
 $ dm cluster init
+$ DOTMESH_CLUSTERURL=http://localhost:6969/rpc
 $ DOTMESH_APIKEY=$(cat ~/.dotmesh/config | jq -r .Remotes.local.ApiKey)
-$ http -a admin:$DOTMESH_APIKEY POST http://localhost:6969/rpc < test/ping.json
+$ http -a admin:$DOTMESH_APIKEY POST $DOTMESH_CLUSTERURL < test/ping.json
+HTTP/1.1 200 OK
+Content-Length: 57
+Content-Type: application/json; charset=utf-8
+Date: Fri, 16 Mar 2018 07:06:44 GMT
+X-Content-Type-Options: nosniff
+
+{
+    "id": 6129484611666146000,
+    "jsonrpc": "2.0",
+    "result": true
+}
 ```
