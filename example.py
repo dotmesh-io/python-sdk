@@ -4,9 +4,20 @@ from api.client import DotmeshClient
 # let's set up the cluster access:
 api_key = os.environ['DOTMESH_APIKEY']
 cluster_url = "http://localhost:6969/rpc"
-d = DotmeshClient(cluster_url=cluster_url, username="admin", api_key=api_key)
+dmclient = DotmeshClient(cluster_url=cluster_url, username="admin", api_key=api_key)
 
-# now let's create a dot called 'test' and query it then:
+# now let's create a dot called 'test' and work in a branch called 'master':
 dotname = "test"
-d.createDot(dotname=dotname)
-print(d.getDot(dotname=dotname))
+branchname= "master"
+dot = dmclient.createDot(dotname=dotname)
+# alternatively, if a dot already exists,
+# you can do the following:
+# dot = dmclient.getDot(dotname=dotname)
+print("{0} and {1}".format(dot.id, dot.name))
+
+# get a branch to work on:
+branch = dot.getBranch(branchname)
+print("{0} and {1}".format(branch.id, branch.name))
+
+# now let's clean up:
+dmclient.deleteDot(dotname=dotname)

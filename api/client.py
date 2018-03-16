@@ -13,16 +13,14 @@ from jsonrpcclient.request import Request
 class DotmeshClient(object):
     """
     The Dotmesh client.
+    :param cluster_url: the dotmesh cluster URL, for example: `http://localhost:6969/rpc`
+    :param username: the HTTP Basic auth user name, such as `admin`
+    :param api_key: the HTTP Basic auth password as an API Key 
     """
 
     def __init__(self, cluster_url, username, api_key):
         """
-        Creates an instance of the Dotmesh client.
-        
-        :Parameters:
-           - `cluster_url`: the dotmesh cluster URL, for example: `http://localhost:6969/rpc`
-           - `username`: the HTTP Basic auth user name, such as `admin`
-           - `api_key`: the HTTP Basic auth password as an API Key 
+        Creates the Dotmesh client.
         """
         self.cluster_url = cluster_url
         self.client = HTTPClient(cluster_url)
@@ -36,18 +34,72 @@ class DotmeshClient(object):
 
     def getDot(self, dotname):
         """
-        Gets handle to a dot.
+        Looks up an existing dot by name. 
 
-        :Parameters:
-           - `dotname`: the name of the dot
+        :param dotname: the name of the dot
+        :return: a Dot object
         """
-        return self.client.request("DotmeshRPC.Lookup", Namespace="admin", Name=dotname, Branch="")
+        id = self.client.request("DotmeshRPC.Lookup", Namespace="admin", Name=dotname, Branch="")
+        return Dot(client=self.client, id=id, name=dotname)
 
     def createDot(self, dotname):
         """
-        Creates a dot.
+        Creates a dot by name.
 
-        :Parameters:
-           - `dotname`: the name of the dot
+        :param dotname: the name of the dot
+        :return: a Dot object
         """
-        return self.client.request("DotmeshRPC.Create", Namespace="admin", Name=dotname)
+        self.client.request("DotmeshRPC.Create", Namespace="admin", Name=dotname)
+        return self.getDot(dotname)
+
+    def deleteDot(self, dotname):
+        """
+        Deletes a dot by name.
+
+        :param dotname: the name of the dot
+        """
+        return self.client.request("DotmeshRPC.Delete", Namespace="admin", Name=dotname)
+
+class Dot(object):
+    """
+    A data dot.
+    :param client: the Dotmesh client to use
+    :param id: the ID of the dot
+    :param name: the name of the dot
+    """
+    def __init__(self, client, id, name):
+        """
+        Creates an instance of a data dot.       
+        """
+        self.client = client
+        self.id = id
+        self.name = name
+
+    def getBranch(self, branchname):
+        """
+        Get a branch of a dot.
+
+        :param branchname: the name of the branch
+        :return: a Branch object
+        """
+        id = self.client.request(
+            "DotmeshRPC.Lookup",
+            Namespace="admin",
+            Name=self.name,
+            Branch=branchname)
+        return Branch(client=self.client, id=id, name=branchname)
+
+class Branch(object):
+    """
+    A branch in a dot.
+    :param client: the Dotmesh client to use
+    :param id: the ID of the branch
+    :param name: the name of the branch
+    """
+    def __init__(self, client, id, name):
+        """
+        Creates an instance of a branch in a dot.
+        """
+        self.client = client
+        self.id = id
+        self.name = name
