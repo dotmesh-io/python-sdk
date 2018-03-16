@@ -33,5 +33,7 @@ setup(
         'Programming Language :: Python :: 3'
     ],
     packages=find_packages(exclude=['test']),
-    install_requires=['jsonrpcclient[requests]']
+    install_requires=[
+        'requests',
+        'jsonrpcclient[requests]']
 )
