@@ -26,13 +26,8 @@ setup(
     url='https://github.com/dotmesh-io/python-sdk', 
     author='Michael Hausenblas',
     author_email='michael.hausenblas@gmail.com',
-    classifiers=[
-        'Development Status :: 3 - Alpha',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: Apache 2 License',
-        'Programming Language :: Python :: 3'
-    ],
-    packages=find_packages(exclude=['test']),
+    packages=find_packages(
+        exclude=['test', 'build', 'dist', 'datadots_api.egg-info']),
     install_requires=[
         'requests',
         'jsonrpcclient[requests]']
