@@ -1,4 +1,5 @@
 import os
+import time
 from api.client import DotmeshClient
 
 # let's set up the cluster access:
@@ -13,11 +14,11 @@ dot = dmclient.createDot(dotname=dotname)
 # alternatively, if a dot already exists,
 # you can do the following:
 # dot = dmclient.getDot(dotname=dotname)
-print("{0} and {1}".format(dot.id, dot.name))
+print("Dot: ID={0}, name={1}".format(dot.id, dot.name))
 
 # get a branch to work on:
 branch = dot.getBranch(branchname)
-print("{0} and {1}".format(branch.id, branch.name))
+print("Branch: {0}".format(branch.name))
 
 # now let's clean up:
 dmclient.deleteDot(dotname=dotname)
