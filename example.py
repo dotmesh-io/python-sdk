@@ -43,6 +43,7 @@ print("\n")
 print("{0}: {1}".format(mylog[0]["Metadata"]["timestamp"], mylog[0]["Metadata"]["message"]))
 
 # and finally, let's clean up by deleting the dot (and all the commits)
-print("\n== Clean-up:")
+# if instructed so by user, via the optional CLI argument:
 if len(sys.argv) > 1 and sys.argv[1]=="cleanup":
+    print("\n== Clean-up:")
     dmclient.deleteDot(dotname=dotname)
