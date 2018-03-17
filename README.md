@@ -32,6 +32,7 @@ Some usage examples below.
 ### Create a dot
 
 ```python
+from dotmesh.client import DotmeshClient
 d = DotmeshClient(cluster_url=cluster_url, username=user, api_key=api_key)
 dot = dmclient.createDot(dotname="test")
 ```
@@ -39,6 +40,7 @@ dot = dmclient.createDot(dotname="test")
 ### Look up a dot by name
 
 ```python
+from dotmesh.client import DotmeshClient
 d = DotmeshClient(cluster_url=cluster_url, username=user, api_key=api_key)
 print(d.getDot(dotname="test"))
 ```
@@ -46,6 +48,7 @@ print(d.getDot(dotname="test"))
 ### Commit to a branch and show the log
 
 ```python
+from dotmesh.client import DotmeshClient
 d = DotmeshClient(cluster_url=cluster_url, username=user, api_key=api_key)
 dot = dmclient.createDot(dotname="test")
 branch = dot.getBranch("master")
@@ -56,6 +59,7 @@ print(branch.log())
 ### Create new branch based on latest master
 
 ```python
+from dotmesh.client import DotmeshClient
 d = DotmeshClient(cluster_url=cluster_url, username=user, api_key=api_key)
 dot = dmclient.createDot(dotname="test")
 branch = dot.getBranch("master")

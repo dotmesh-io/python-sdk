@@ -1,7 +1,7 @@
 import os
 import sys
 import time
-from api.client import DotmeshClient
+from dotmesh.client import DotmeshClient
 
 # let's set up the cluster access:
 api_key = os.environ['DOTMESH_APIKEY']
