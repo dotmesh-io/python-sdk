@@ -32,33 +32,36 @@ class DotmeshClient(object):
         """
         return self.client.request("DotmeshRPC.Ping")
 
-    def getDot(self, dotname):
+    def getDot(self, dotname, ns="admin"):
         """
         Looks up an existing dot by name. 
 
         :param dotname: the name of the dot
+        :param ns: the namespace to operate in, defaults to 'admin'
         :return: a Dot object
         """
-        id = self.client.request("DotmeshRPC.Lookup", Namespace="admin", Name=dotname, Branch="")
+        id = self.client.request("DotmeshRPC.Lookup", Namespace=ns, Name=dotname, Branch="")
         return Dot(client=self.client, id=id, name=dotname)
 
-    def createDot(self, dotname):
+    def createDot(self, dotname, ns="admin"):
         """
         Creates a dot by name.
 
         :param dotname: the name of the dot
+        :param ns: the namespace to operate in, defaults to 'admin'
         :return: a Dot object
         """
-        self.client.request("DotmeshRPC.Create", Namespace="admin", Name=dotname)
+        self.client.request("DotmeshRPC.Create", Namespace=ns, Name=dotname)
         return self.getDot(dotname)
 
-    def deleteDot(self, dotname):
+    def deleteDot(self, dotname, ns="admin"):
         """
         Deletes a dot by name.
 
         :param dotname: the name of the dot
+        :param ns: the namespace to operate in, defaults to 'admin'
         """
-        return self.client.request("DotmeshRPC.Delete", Namespace="admin", Name=dotname)
+        return self.client.request("DotmeshRPC.Delete", Namespace=ns, Name=dotname)
 
 class Dot(object):
     """
@@ -67,13 +70,14 @@ class Dot(object):
     :param id: the ID of the dot
     :param name: the name of the dot
     """
-    def __init__(self, client, id, name):
+    def __init__(self, client, id, name, ns="admin"):
         """
         Creates an instance of a data dot.       
         """
         self.client = client
         self.id = id
         self.name = name
+        self.ns = ns
 
     def getBranch(self, branchname):
         """
@@ -85,7 +89,7 @@ class Dot(object):
         bname = branchname
         if branchname == "master":
             bname = ""
-        self.client.request("DotmeshRPC.Lookup", Namespace="admin",Name=self.name, Branch=bname)
+        self.client.request("DotmeshRPC.Lookup", Namespace=self.ns,Name=self.name, Branch=bname)
         return Branch(dot=self, name=branchname)
 
 class Branch(object):
@@ -110,7 +114,7 @@ class Branch(object):
         bname = self.name
         if self.name == "master":
             bname = ""
-        return self.dot.client.request("DotmeshRPC.Commit", Namespace="admin", Name=self.dot.name, Branch=bname, Message=msg)
+        return self.dot.client.request("DotmeshRPC.Commit", Namespace=self.dot.ns, Name=self.dot.name, Branch=bname, Message=msg)
 
     def log(self):
         """
@@ -119,7 +123,7 @@ class Branch(object):
         bname = self.name
         if self.name == "master":
             bname = ""
-        return self.dot.client.request("DotmeshRPC.Commits", Namespace="admin", Name=self.dot.name, Branch=bname)
+        return self.dot.client.request("DotmeshRPC.Commits", Namespace=self.dot.ns, Name=self.dot.name, Branch=bname)
 
     def createBranch(self, newbranchname, srcbranchname, commit_id=""):
         """
@@ -128,12 +132,16 @@ class Branch(object):
 
         :param newbranchname: the name of the new branch to create
         :param srcbranchname: the name of the branch to start the new branch off
-        :param commit_id: if set, use this commit ID otherwise use most recent
+        :param commit_id: if set, use this commit ID otherwise use most recent one
         :return: a Branch object
         """
         if commit_id == "":  # use the most recent commit ID
             commitlog = self.log()
             commit_id = commitlog[-1]["Id"]  
         self.dot.client.request("DotmeshRPC.Branch",
-                                Namespace="admin", Name=self.dot.name, SourceBranch=srcbranchname, NewBranchName=newbranchname, SourceCommitId=commit_id)
+                                Namespace=self.dot.ns,
+                                Name=self.dot.name,
+                                SourceBranch=srcbranchname,
+                                NewBranchName=newbranchname,
+                                SourceCommitId=commit_id)
         return Branch(dot=self.dot, name=newbranchname)
