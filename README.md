@@ -10,6 +10,7 @@ This is the Datadots API for Python, allowing you to access and manipulate dots 
 - [Install](#install)
 - [Use](#use)
     - [Create a dot](#create-a-dot)
+    - [Create a dot in a namespace](#create-a-dot-in-a-namespace)
     - [Look up a dot by name](#look-up-a-dot-by-name)
     - [Commit to branch, show log](#commit-to-a-branch-and-show-the-log)
     - [Create new branch based on latest master](#create-new-branch-based-on-latest-master)
@@ -35,6 +36,14 @@ Some usage examples below.
 from dotmesh.client import DotmeshClient
 d = DotmeshClient(cluster_url=cluster_url, username=user, api_key=api_key)
 dot = dmclient.createDot(dotname="test")
+```
+
+### Create a dot in a namespace
+
+```python
+from dotmesh.client import DotmeshClient
+d = DotmeshClient(cluster_url=cluster_url, username=user, api_key=api_key)
+dot = dmclient.createDot(dotname="test", ns="mynamespace")
 ```
 
 ### Look up a dot by name
