@@ -42,8 +42,18 @@ mylog = mybranch.log()
 print("\n")
 print("{0}: {1}".format(mylog[0]["Metadata"]["timestamp"], mylog[0]["Metadata"]["message"]))
 
+# now let's create a dot called 'other' in the namespace "thing"
+# and work in a branch called 'master':
+namespace = "thing"
+otherdotname = "other"
+branchname = "master"
+print("== Create dot:")
+dot = dmclient.createDot(dotname=otherdotname, ns=namespace)
+print("\nnamespace= {0}, ID={1}, name={2}".format(dot.ns, dot.id, dot.name))
+
 # and finally, let's clean up by deleting the dot (and all the commits)
 # if instructed so by user, via the optional CLI argument:
 if len(sys.argv) > 1 and sys.argv[1]=="cleanup":
     print("\n== Clean-up:")
     dmclient.deleteDot(dotname=dotname)
+    dmclient.deleteDot(dotname=otherdotname)
