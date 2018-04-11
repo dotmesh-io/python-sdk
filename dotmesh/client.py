@@ -52,7 +52,7 @@ class DotmeshClient(object):
         :return: a Dot object
         """
         self.client.request("DotmeshRPC.Create", Namespace=ns, Name=dotname)
-        return self.getDot(dotname)
+        return self.getDot(dotname, ns)
 
     def deleteDot(self, dotname, ns="admin"):
         """
