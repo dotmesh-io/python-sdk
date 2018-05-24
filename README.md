@@ -23,7 +23,7 @@ You must have Python 3 installed, this is the only version supported.
 Then do:
 
 ```bash
-$ pip3 install datadots-api==0.1.2
+$ pip3 install datadots-api==0.1.4
 ```
 
 ## Use
