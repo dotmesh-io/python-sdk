@@ -27,6 +27,7 @@ print("\n{0}".format(branch.name))
 print("\n== Do some commit and show log:")
 branch.commit("just a test commit")
 branch.commit("and another commit, who would have thought")
+branch.commit("here is a commit with some extra metadata", {"fruit": "apples", "color":"red"})
 log = branch.log()
 print("\n")
 for entry in log:

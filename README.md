@@ -65,6 +65,17 @@ branch.commit("just a test commit")
 print(branch.log())
 ```
 
+### Commit to a branch with some extra metadata
+
+```python
+from dotmesh.client import DotmeshClient
+d = DotmeshClient(cluster_url=cluster_url, username=user, api_key=api_key)
+dot = dmclient.createDot(dotname="test")
+branch = dot.getBranch("master")
+branch.commit("a commit with some extra metadata", {"fruit": "apples", "color": "red"})
+print(branch.log())
+```
+
 ### Create new branch based on latest master
 
 ```python
