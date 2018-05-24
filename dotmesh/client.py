@@ -105,7 +105,7 @@ class Branch(object):
         self.dot = dot
         self.name = name
 
-    def commit(self, msg, metadata):
+    def commit(self, msg, metadata={}):
         """
         Commits the branch.
 
