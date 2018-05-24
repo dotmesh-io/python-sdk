@@ -105,16 +105,17 @@ class Branch(object):
         self.dot = dot
         self.name = name
 
-    def commit(self, msg):
+    def commit(self, msg, metadata):
         """
         Commits the branch.
 
         :param msg: the commit message to use
+        :param metadata: a dict of metadata key/value pairs to add to the commit
         """
         bname = self.name
         if self.name == "master":
             bname = ""
-        return self.dot.client.request("DotmeshRPC.Commit", Namespace=self.dot.ns, Name=self.dot.name, Branch=bname, Message=msg)
+        return self.dot.client.request("DotmeshRPC.Commit", Namespace=self.dot.ns, Name=self.dot.name, Branch=bname, Message=msg, Metadata=metadata)
 
     def log(self):
         """
