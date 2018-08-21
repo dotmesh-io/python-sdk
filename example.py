@@ -1,11 +1,15 @@
 import os
 import sys
-import time
 from dotmesh.client import DotmeshClient
+
+# example of how to quieten the logs:
+#import logging
+#logging.getLogger('jsonrpcclient.client.request').setLevel(logging.ERROR)
+#logging.getLogger('jsonrpcclient.client.response').setLevel(logging.ERROR)
 
 # let's set up the cluster access:
 api_key = os.environ['DOTMESH_APIKEY']
-cluster_url = "http://localhost:6969/rpc"
+cluster_url = "http://localhost:32607/rpc"
 dmclient = DotmeshClient(cluster_url=cluster_url, username="admin", api_key=api_key)
 
 # now let's create a dot called 'test' and work in a branch called 'master':
