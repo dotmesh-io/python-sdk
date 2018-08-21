@@ -21,5 +21,5 @@ setup(
         exclude=['test', 'build', 'dist', 'datadots_api.egg-info']),
     install_requires=[
         'requests',
-        'jsonrpcclient[requests]']
+        'jsonrpcclient[requests]==2.6.0']
 )
