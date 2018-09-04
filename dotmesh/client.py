@@ -2,13 +2,58 @@
 """
 This module implements the Dotmesh client.
 
-@author: Michael Hausenblas, http://mhausenblas.info/#i
+@author: Michael Hausenblas, http://mhausenblas.info/#i and Luke Marsden
+    https://lukemarsden.net
 @since: 2018-03-16
 @status: init
 """
 
 from jsonrpcclient.http_client import HTTPClient
-from jsonrpcclient.request import Request
+
+class InvalidNamespaceAndName(Exception):
+    pass
+
+class Dot(object):
+    def __init__(self, namespace, name):
+        self.namespace = namespace
+        self.name = name
+
+    @classmethod
+    def fromDotNameWithOptionalNamespace(cls, identifier):
+        """
+        Accept dot names in the form:
+
+        - frob
+          In which case 'frob' is the dot name and the namespace defaults to
+          'admin'.
+
+        - foo/frob
+          In which case 'foo' is the namespace (e.g. a user's username) and
+          'frob' is the dot name.
+        """
+        if "/" in identifier:
+            shrap = identifier.split("/", 1)
+            return cls(namespace=shrap[0], name=shrap[1])
+        else:
+            return cls(namespace="admin", name=identifier)
+
+    @classmethod
+    def fromDotNamespaceAndName(cls, identifier):
+        """
+        Like fromDotNameWithOptionalNamespace but only accept the form with the
+        namespace delimitor.
+
+        - foo/frob
+          In which case 'foo' is the namespace (e.g. a user's username) and
+          'frob' is the dot name.
+        """
+	parts = identifier.split("/")
+	if len(parts) == 2:
+	   return cls(namespace=parts[0], name=parts[1])
+	else:
+	   raise InvalidNamespaceAndName(
+               "Invalid dot name %s - %r" % (identifier, parts),
+           )
 
 class DotmeshClient(object):
     """
