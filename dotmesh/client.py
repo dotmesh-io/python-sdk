@@ -8,6 +8,7 @@ This module implements the Dotmesh client.
 """
 
 from jsonrpcclient.http_client import HTTPClient
+from jsonrpcclient.request import Request
 
 class DotmeshClient(object):
     """
@@ -31,29 +32,14 @@ class DotmeshClient(object):
         """
         return self.client.request("DotmeshRPC.Ping")
 
-    def getDot(self, dotname, ns=None):
+    def getDot(self, dotname, ns="admin"):
         """
         Looks up an existing dot by name. 
 
-        :param dotname: the name of the dot. If the name contains a namespace
-            delimitor ('/') then the namespace will be extracted from the
-            dotname. If both ns is specified and dotname contains an embedded
-            namespace, an exception is raised.
+        :param dotname: the name of the dot
         :param ns: the namespace to operate in, defaults to 'admin'
         :return: a Dot object
         """
-        if ns is not None and "/" in dotname:
-            raise Exception(
-                "Namespace specified in dotname with / delimitor (%v) "
-                +"and also in ns kwarg (%v)" %
-                (dotname, ns),
-            )
-        if ns is None:
-            ns = "admin"
-        if "/" in dotname:
-            shrap = dotname.split('/', 1)
-            ns = shrap[0]
-            dotname = shrap[1]
         id = self.client.request("DotmeshRPC.Lookup", Namespace=ns, Name=dotname, Branch="")
         return Dot(client=self.client, id=id, name=dotname)
 
