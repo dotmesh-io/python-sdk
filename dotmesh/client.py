@@ -47,11 +47,11 @@ class Dot(object):
           In which case 'foo' is the namespace (e.g. a user's username) and
           'frob' is the dot name.
         """
-	parts = identifier.split("/")
-	if len(parts) == 2:
-	   return cls(namespace=parts[0], name=parts[1])
-	else:
-	   raise InvalidNamespaceAndName(
+        parts = identifier.split("/")
+        if len(parts) == 2:
+           return cls(namespace=parts[0], name=parts[1])
+        else:
+           raise InvalidNamespaceAndName(
                "Invalid dot name %s - %r" % (identifier, parts),
            )
 
