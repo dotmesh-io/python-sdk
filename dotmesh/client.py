@@ -13,13 +13,13 @@ from jsonrpcclient.http_client import HTTPClient
 class InvalidNamespaceAndName(Exception):
     pass
 
-class Dot(object):
+class DotName(object):
     def __init__(self, namespace, name):
         self.namespace = namespace
         self.name = name
 
     @classmethod
-    def fromDotNameWithOptionalNamespace(cls, identifier):
+    def fromDotNameWithOptionalNamespace(cls, client, identifier):
         """
         Accept dot names in the form:
 
@@ -60,7 +60,7 @@ class DotmeshClient(object):
     The Dotmesh client.
     :param cluster_url: the dotmesh cluster URL, for example: `http://localhost:6969/rpc`
     :param username: the HTTP Basic auth user name, such as `admin`
-    :param api_key: the HTTP Basic auth password as an API Key 
+    :param api_key: the HTTP Basic auth password as an API Key
     """
 
     def __init__(self, cluster_url, username, api_key):
@@ -81,10 +81,14 @@ class DotmeshClient(object):
         """
         Looks up an existing dot by name. 
 
-        :param dotname: the name of the dot
-        :param ns: the namespace to operate in, defaults to 'admin'
+        :param dotname: the name of the dot, as a string or a DotName
+        :param ns: the namespace to operate in (if dotname isn't a Dotname), defaults to 'admin'
         :return: a Dot object
         """
+        if isinstance(dotname, DotName):
+            ns = dotname.namespace
+            dotname = dotname.name
+
         id = self.client.request("DotmeshRPC.Lookup", Namespace=ns, Name=dotname, Branch="")
         return Dot(client=self.client, id=id, name=dotname)
 
@@ -96,6 +100,10 @@ class DotmeshClient(object):
         :param ns: the namespace to operate in, defaults to 'admin'
         :return: a Dot object
         """
+        if isinstance(dotname, DotName):
+            ns = dotname.namespace
+            dotname = dotname.name
+
         self.client.request("DotmeshRPC.Create", Namespace=ns, Name=dotname)
         return self.getDot(dotname, ns)
 
@@ -106,6 +114,10 @@ class DotmeshClient(object):
         :param dotname: the name of the dot
         :param ns: the namespace to operate in, defaults to 'admin'
         """
+        if isinstance(dotname, DotName):
+            ns = dotname.namespace
+            dotname = dotname.name
+
         return self.client.request("DotmeshRPC.Delete", Namespace=ns, Name=dotname)
 
 class Dot(object):
