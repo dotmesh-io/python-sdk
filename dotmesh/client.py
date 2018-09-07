@@ -19,7 +19,7 @@ class DotName(object):
         self.name = name
 
     @classmethod
-    def fromDotNameWithOptionalNamespace(cls, client, identifier):
+    def fromDotNameWithOptionalNamespace(cls, identifier):
         """
         Accept dot names in the form:
 
