@@ -8,7 +8,7 @@ This module implements the Dotmesh client.
 @status: init
 """
 
-from jsonrpcclient.http_client import HTTPClient
+from jsonrpcclient.clients.http_client import HTTPClient
 
 class InvalidNamespaceAndName(Exception):
     pass
