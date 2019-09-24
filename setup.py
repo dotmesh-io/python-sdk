@@ -10,7 +10,7 @@ from codecs import open
 
 setup(
     name='datadots-api',
-    version='0.2.0',
+    version='0.2.1',
     description='Datadots API',
     long_description=open('README.md', 'r').read(),
     long_description_content_type="text/markdown",

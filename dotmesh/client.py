@@ -90,7 +90,7 @@ class DotmeshClient(object):
             dotname = dotname.name
 
         id = self.client.request("DotmeshRPC.Lookup", Namespace=ns, Name=dotname, Branch="")
-        return Dot(client=self.client, id=id, name=dotname)
+        return Dot(client=self.client, id=id, name=dotname, ns=ns)
 
     def createDot(self, dotname, ns="admin"):
         """
