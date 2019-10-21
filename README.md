@@ -1,6 +1,6 @@
 # Datadots API for Python
 
-[![PyPI](https://img.shields.io/pypi/v/nine.svg)](https://pypi.org/project/datadots-api/)
+[![PyPI](https://img.shields.io/pypi/v/nine.svg)](https://pypi.org/project/datadots-api/) [![Build Status](https://drone.app.cloud.dotscience.net/api/badges/dotmesh-io/python-sdk/status.svg)](https://drone.app.cloud.dotscience.net/dotmesh-io/python-sdk)
 
 
 **STATUS: What you currently see here is WIP, do not use in production!** 
@@ -16,6 +16,7 @@ This is the Datadots API for Python, allowing you to access and manipulate dots 
     - [Create new branch based on latest master](#create-new-branch-based-on-latest-master)
     - [End-to-end example](#end-to-end-example)
 - [Test](#test)
+- [Release](#release)
 
 ## Install
 
@@ -183,3 +184,6 @@ X-Content-Type-Options: nosniff
     "result": true
 }
 ```
+
+## Release
+To release this project to pypi, check the version (git tag and find the highest one, or check setup.py) then run `bump2version --new-version <new-version> <major|minor|patch> && git push --tags`
