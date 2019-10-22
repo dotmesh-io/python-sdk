@@ -75,7 +75,7 @@ class DotmeshClient(object):
         """
         Pings the cluster.
         """
-        return self.client.request("DotmeshRPC.Ping")
+        return self.client.request("DotmeshRPC.Ping").data.result
 
     def getDot(self, dotname, ns="admin"):
         """
@@ -89,7 +89,7 @@ class DotmeshClient(object):
             ns = dotname.namespace
             dotname = dotname.name
 
-        id = self.client.request("DotmeshRPC.Lookup", Namespace=ns, Name=dotname, Branch="")
+        id = self.client.request("DotmeshRPC.Lookup", Namespace=ns, Name=dotname, Branch="").data.result
         return Dot(client=self.client, id=id, name=dotname, ns=ns)
 
     def createDot(self, dotname, ns="admin"):
@@ -104,7 +104,7 @@ class DotmeshClient(object):
             ns = dotname.namespace
             dotname = dotname.name
 
-        self.client.request("DotmeshRPC.Create", Namespace=ns, Name=dotname)
+        self.client.request("DotmeshRPC.Create", Namespace=ns, Name=dotname).data.result
         return self.getDot(dotname, ns)
 
     def deleteDot(self, dotname, ns="admin"):
@@ -118,7 +118,7 @@ class DotmeshClient(object):
             ns = dotname.namespace
             dotname = dotname.name
 
-        return self.client.request("DotmeshRPC.Delete", Namespace=ns, Name=dotname)
+        return self.client.request("DotmeshRPC.Delete", Namespace=ns, Name=dotname).data.result
 
 class Dot(object):
     """
@@ -146,7 +146,7 @@ class Dot(object):
         bname = branchname
         if branchname == "master":
             bname = ""
-        self.client.request("DotmeshRPC.Lookup", Namespace=self.ns,Name=self.name, Branch=bname)
+        self.client.request("DotmeshRPC.Lookup", Namespace=self.ns,Name=self.name, Branch=bname).data.result
         return Branch(dot=self, name=branchname)
 
 class Branch(object):
@@ -172,7 +172,7 @@ class Branch(object):
         bname = self.name
         if self.name == "master":
             bname = ""
-        return self.dot.client.request("DotmeshRPC.Commit", Namespace=self.dot.ns, Name=self.dot.name, Branch=bname, Message=msg, Metadata=metadata)
+        return self.dot.client.request("DotmeshRPC.Commit", Namespace=self.dot.ns, Name=self.dot.name, Branch=bname, Message=msg, Metadata=metadata).data.result
 
     def log(self):
         """
@@ -181,7 +181,7 @@ class Branch(object):
         bname = self.name
         if self.name == "master":
             bname = ""
-        return self.dot.client.request("DotmeshRPC.Commits", Namespace=self.dot.ns, Name=self.dot.name, Branch=bname)
+        return self.dot.client.request("DotmeshRPC.Commits", Namespace=self.dot.ns, Name=self.dot.name, Branch=bname).data.result
 
     def createBranch(self, newbranchname, srcbranchname, commit_id=""):
         """
@@ -201,5 +201,5 @@ class Branch(object):
                                 Name=self.dot.name,
                                 SourceBranch=srcbranchname,
                                 NewBranchName=newbranchname,
-                                SourceCommitId=commit_id)
+                                SourceCommitId=commit_id).data.result
         return Branch(dot=self.dot, name=newbranchname)
